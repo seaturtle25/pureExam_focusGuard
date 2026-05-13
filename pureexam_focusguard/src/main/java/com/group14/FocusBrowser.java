@@ -24,8 +24,7 @@ public class FocusBrowser/* extends Application */{
         WebView webView = new WebView();
 
         WebEngine webEngine = webView.getEngine();
-        webEngine.load("https://www.google.com");
-
+        webEngine.load("https://www.google.com"); 
         WebHistory history = webEngine.getHistory();
 
         Button back = new Button("<-");
