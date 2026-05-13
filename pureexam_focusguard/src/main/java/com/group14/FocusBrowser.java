@@ -23,10 +23,21 @@ public class FocusBrowser/* extends Application */{
 
         WebView webView = new WebView();
 
+        UrlInterceptor urlInterceptor = new UrlInterceptor();
+
         WebEngine webEngine = webView.getEngine();
+
+        webEngine.locationProperty().addListener((obs, oldUrl, newUrl) -> {
+            if(newUrl != null && !urlInterceptor.isSafeUrl(newUrl)){
+                javafx.application.Platform.runLater(() -> {
+                    webEngine.load(urlInterceptor.getRedirectUrl());
+                });
+            }
+        });
+
         webEngine.load("https://www.google.com"); 
         WebHistory history = webEngine.getHistory();
-
+        
         Button back = new Button("<-");
         Button next = new Button("->");
 
@@ -45,9 +56,10 @@ public class FocusBrowser/* extends Application */{
         HBox hBox = new HBox(back, next);
 
         webView.getEngine().getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+            //System.out.println("開始載入網頁");
             // 必須等網頁 "完全跑完" 才能抓到元素
             if (newState == Worker.State.SUCCEEDED) {
-                
+                //System.out.println("載入網頁完成");
                 String jsCode = """
                     function crushAIElements() {
                         //刪除「AI 模式」按鈕
