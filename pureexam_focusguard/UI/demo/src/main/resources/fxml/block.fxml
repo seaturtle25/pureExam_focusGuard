@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.StackPane?>
+
+
+<VBox spacing="20" style="-fx-background-color: #f7f6e8ef;" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.BlockController">
+
+    <!-- padding -->
+    <padding>
+        <Insets bottom="30" left="30" right="30" top="30" />
+    </padding>
+
+    <!--網址封鎖-->
+    <Label text="網址封鎖 Network Shield">
+
+        <font>
+            <Font size="22" />
+        </font>
+
+    </Label>
+
+    <!-- Input 區 -->
+    <HBox spacing="10">
+
+        <!-- TextField -->
+        <TextField fx:id="urlField" prefHeight="30.0" promptText="輸入網址..." HBox.hgrow="ALWAYS" />
+
+        <!-- Add Button -->
+        <Button onAction="#urlAdd" prefHeight="30.0" text="Add" />
+
+    </HBox>
+
+    <Separator orientation="HORIZONTAL" />
+
+    <!-- Scroll Area -->
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="NEVER" style="-fx-background: transparent; -fx-background-color: transparent;" VBox.vgrow="ALWAYS" prefHeight="250">
+
+        <content>
+
+            <!-- 動態 List -->
+            <VBox fx:id="listContainer" prefWidth="600" prefHeight="400" spacing="15" />
+
+        </content>
+
+    </ScrollPane>
+
+   <!--軟體封鎖-->
+    <Label text="軟體封鎖 Software Blocking">
+
+        <font>
+            <Font size="22" />
+        </font>
+
+    </Label>
+
+        <!-- Input 區 -->
+    <HBox spacing="10">
+
+        <!-- TextField -->
+        <TextField fx:id="exeField" prefHeight="30.0" promptText="選擇軟體..." HBox.hgrow="ALWAYS" />
+
+        <!-- Add Button -->
+        <Button  onAction="#exeAdd" prefHeight="30.0" text="Add" />
+
+    </HBox>
+
+    <Separator orientation="HORIZONTAL" />
+
+    <!-- Scroll Area -->
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="NEVER" style="-fx-background: transparent; -fx-background-color: transparent;" VBox.vgrow="ALWAYS" prefHeight="250">
+
+        <content>
+
+            <FlowPane fx:id="listContainer2" hgap="15" prefWrapLength="600" vgap="15" />
+
+        </content>
+
+    </ScrollPane>
+
+    <!--儲存變更-->
+    <Button text="Save"
+            onAction="#handleSave"/>
+
+</VBox>

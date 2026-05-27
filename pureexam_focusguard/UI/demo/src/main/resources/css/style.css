@@ -1,0 +1,14 @@
+.sidebar-button {
+
+    -fx-background-color: transparent;
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+
+}
+
+.sidebar-button:hover {
+
+    -fx-border-color: white white black white;
+    -fx-background-color: rgb(255, 255, 255);
+    
+}
