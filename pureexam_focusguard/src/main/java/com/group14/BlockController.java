@@ -1,4 +1,4 @@
-package com.example;
+package com.group14;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;

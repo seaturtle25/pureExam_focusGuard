@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="BorderPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.FXMLController">
+<BorderPane id="BorderPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group14.FXMLController">
     <left>
 
         <VBox prefHeight="200.0" prefWidth="183.0" spacing="20" style="-fx-background-color: #f8fafc; -fx-border-color: #dddddd;">

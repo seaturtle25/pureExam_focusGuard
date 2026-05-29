@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 
 
-<VBox spacing="20" style="-fx-background-color: #f7f6e8ef;" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.BlockController">
+<VBox spacing="20" style="-fx-background-color: #f7f6e8ef;" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group14.BlockController">
 
     <!-- padding -->
     <padding>

@@ -1,4 +1,4 @@
-package com.example;
+package com.group14;
 
 // block or unblock的網址與軟體
 public class BlockItem {
