@@ -61,7 +61,7 @@ public class App extends Application {
         topBar.setPadding(new Insets(10, 20, 10, 20));
         topBar.setStyle("-fx-background-color: #2c3e50;");
 
-        FocusBrowser browser = new FocusBrowser();
+        BrowserController browser = new BrowserController();
         
         BorderPane root = new BorderPane();
         root.setTop(topBar); //計時

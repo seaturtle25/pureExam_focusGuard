@@ -34,7 +34,7 @@ public class UrlInterceptor {
         //遍歷黑名單，檢查網址
         for (String blocked : AI_BLACKLIST) {
             if (lowerCaseUrl.contains(blocked)) {
-                System.out.println("[攔截] 偵測到嘗試存取 AI 工具: " + blocked);
+                System.out.println("攔截: 嘗試存取 AI 工具: " + blocked);
                 return false; 
             }
         }

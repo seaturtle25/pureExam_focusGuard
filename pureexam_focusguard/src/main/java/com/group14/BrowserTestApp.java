@@ -1,6 +1,10 @@
 package com.group14;
 
+import java.io.IOException;
+
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -9,20 +13,24 @@ import javafx.stage.Stage;
 public class BrowserTestApp extends Application {
 
     public static void main(String[] args) {
+        System.setProperty("http.protocols", "HTTP/1.1");
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("測試瀏覽器");
 
-        //建立實體
-        FocusBrowser browser = new FocusBrowser();
-
-        //呼叫 getView() 取得畫面，塞進 Scene 裡
-        Scene scene = new Scene(browser.getView(), 960, 600);
+        Scene scene = new Scene(loadFXML());
 
         primaryStage.setScene(scene);
+        primaryStage.setWidth(650);
+        primaryStage.setHeight(600);
         primaryStage.show();
+    }
+
+    private Parent loadFXML() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/browser.fxml"));
+        return fxmlLoader.load();
     }
 }

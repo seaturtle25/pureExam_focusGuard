@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group14.BrowserController">
+   <children>
+      <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #e0e0e0; -fx-padding: 5 10 5 10;">
+         <children>
+            <Button mnemonicParsing="false" onAction="#addNewTabAndGetEngine" text=" + " />
+         </children>
+      </HBox>
+      
+      <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS" />
+   </children>
+</VBox>
