@@ -2,42 +2,70 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane id="AnchorPane" alignment="BOTTOM_CENTER" prefHeight="200" prefWidth="320"  style="-fx-background-color: #f7f6e8ef;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group14.HomeController">
+<VBox alignment="CENTER" spacing="30.0" style="-fx-background-color: #f7f6e8ef;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group14.HomeController">
     <children>
+        
+        <Label fx:id="timerLabel" text="25:00" textFill="#4a4a4a">
+            <font>
+                <Font name="System Bold" size="90.0" />
+            </font>
+        </Label>
+        
+        <Label fx:id="statusLabel" text="等待選擇模式..." textFill="#888888">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
 
-      <HBox alignment="CENTER" spacing="50.0">
+        <HBox alignment="CENTER" spacing="50.0">
+            <children>
+                <Button fx:id="focusModeBtn" onAction="#startFocusMode" style="-fx-background-color: #8A9597; -fx-cursor: hand;" text="讀書專注模式" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                    </padding>
+                </Button>
+                <Button fx:id="examModeBtn" onAction="#startExamMode" style="-fx-background-color: #8A9597; -fx-cursor: hand;" text="嚴格監考模式" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                    </padding>
+                </Button>
+            </children>
+        </HBox>
 
-         <children>
+        <HBox alignment="CENTER" spacing="20.0">
+            <children>
+                <Button fx:id="pauseBtn" onAction="#handlePause" style="-fx-background-color: transparent; -fx-border-color: #8A9597; -fx-border-radius: 5; -fx-text-fill: #8A9597; -fx-cursor: hand;" text="暫停">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <padding>
+                        <Insets bottom="6.0" left="20.0" right="20.0" top="6.0" />
+                    </padding>
+                </Button>
+                <Button fx:id="resetBtn" onAction="#handleReset" style="-fx-background-color: transparent; -fx-border-color: #8A9597; -fx-border-radius: 5; -fx-text-fill: #8A9597; -fx-cursor: hand;" text="停止">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <padding>
+                        <Insets bottom="6.0" left="20.0" right="20.0" top="6.0" />
+                    </padding>
+                </Button>
+            </children>
+            <VBox.margin>
+                <Insets top="10.0" />
+            </VBox.margin>
+        </HBox>
 
-              <Button 
-                      style="-fx-background-color: #8A9597;" 
-                      text="讀書專注模式" textFill="WHITE"
-                      onAction="#startFocusMode">
-
-                   <font>
-                      <Font name="System Bold" size="18.0" />
-                   </font>
-
-                   
-               </Button>
-
-              <Button  
-                      style="-fx-background-color: #8A9597;" 
-                      text="嚴格監考模式" 
-                      textAlignment="JUSTIFY" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               </Button>
-
-
-         </children>
-      </HBox>
     </children>
-</StackPane>
-
+</VBox>
