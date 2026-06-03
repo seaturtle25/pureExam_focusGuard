@@ -12,9 +12,9 @@
       
       <HBox alignment="CENTER_LEFT" spacing="10.0">
          <children>
-            <Label text="請輸入考試時間 (分鐘, 不得小於1分鐘):" /> [cite: 70]
+            <Label text="請輸入考試時間 (分鐘, 不得小於1分鐘):" />
             <TextField fx:id="timeField" prefWidth="80.0" promptText="120" />
-            <Button mnemonicParsing="false" onAction="#handleExport" text="下載考試設定檔 (.oasis)" /> [cite: 76, 77]
+            <Button mnemonicParsing="false" onAction="#handleExport" text="下載考試設定檔 (.oasis)" />
          </children>
       </HBox>
    </children>

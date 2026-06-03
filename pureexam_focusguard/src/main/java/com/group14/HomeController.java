@@ -5,9 +5,10 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class HomeController {
 
@@ -18,15 +19,46 @@ public class HomeController {
     @FXML
     private void startFocusMode() throws IOException {
         PomodoroController.isExamMode = false;
-        goToPomodoro();
+        switchPage("/fxml/primary.fxml");
+        //goToPomodoro();
     }
 
     @FXML
     private void startExamMode() throws IOException {
         PomodoroController.isExamMode = true;
-        goToPomodoro();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/examDialog.fxml"));
+            Parent root = loader.load();
+
+            ExamDialogController dialogController = loader.getController();
+            dialogController.setHomeController(this);
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("OASIS 考試模式");
+            dialogStage.initModality(Modality.APPLICATION_MODAL); // 鎖定後方視窗
+            dialogStage.setScene(new Scene(root));
+            dialogStage.setResizable(false);
+            
+            dialogStage.showAndWait(); // 亮相並等待
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
+    public void switchPage(String fxml) {
+        try{
+            Parent newView = FXMLLoader.load(getClass().getResource(fxml));
+            focusModeBtn.getScene().setRoot(newView);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("無法導向頁面" + fxml);
+        }
+        
+    }
+
+    /*
     //局部換頁
     private void goToPomodoro() throws IOException {
         //讀取番茄鐘的畫面
@@ -42,5 +74,5 @@ public class HomeController {
             contentArea.getChildren().clear(); // 清除大廳畫面
             contentArea.getChildren().add(pomodoroView); // 塞入番茄鐘畫面
         }
-    }
+    }*/
 }

@@ -118,7 +118,7 @@ public class PomodoroController {
         ProcessMonitorTest.stop();
     }
 
-    @FXML
+    /*@FXML
     private void handleBack() throws IOException {
         //讀取大廳的畫面
         Parent homeView = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
@@ -133,7 +133,7 @@ public class PomodoroController {
             contentArea.getChildren().clear(); // 清除番茄鐘畫面
             contentArea.getChildren().add(homeView); // 塞回大廳畫面
         }
-    }
+    }*/
 
     // --- 動態防作弊鎖定機制 ---
     private void enableAntiCheatLock() {

@@ -7,9 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class FXMLController {
+
+    @FXML private Button homeBtn;
 
     @FXML
     private StackPane contentArea;
@@ -17,13 +20,14 @@ public class FXMLController {
     @FXML
     public void initialize() {
 
-        showPage("home.fxml");
+        showPage("pomodoro.fxml");
     }
 
     @FXML
-    private void showHome() {
+    private void showHome() throws IOException {
 
-        showPage("home.fxml");
+        Parent homeView = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
+        homeBtn.getScene().setRoot(homeView);
     }
 
     @FXML

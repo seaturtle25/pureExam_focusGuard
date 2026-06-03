@@ -6,17 +6,17 @@
     },
     {
       "name": "facebook.com",
-      "enabled": false
+      "enabled": true
     }
   ],
   "blockedApps": [
     {
       "name": "chrome.exe",
-      "enabled": false
+      "enabled": true
     },
     {
       "name": "facebook.exe",
-      "enabled": true
+      "enabled": false
     },
     {
       "name": "Instagram.exe",
