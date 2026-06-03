@@ -27,7 +27,7 @@
                     </HBox.margin>
                 </Label>
                 
-                <Spinner fx:id="timeSpinner" prefWidth="90.0" style="-fx-font-size: 14px;" />
+                <Spinner fx:id="timeSpinner" editable="true" prefWidth="80.0" style="-fx-font-size: 14px; -fx-background-color: transparent;" />
                 
                 <Button fx:id="startBtn" onAction="#handleStart" style="-fx-background-color: #8A9597; -fx-cursor: hand;" text="開始計時" textFill="WHITE">
                     <font>
