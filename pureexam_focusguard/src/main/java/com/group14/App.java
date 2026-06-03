@@ -1,4 +1,4 @@
-package com.group14;
+/*package com.group14;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -12,9 +12,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+*/
 /**
  * JavaFX App
  */
+/*
 public class App extends Application {
 
     @Override
@@ -89,3 +91,4 @@ public class App extends Application {
     }
 
 }
+*/
