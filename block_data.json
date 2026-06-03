@@ -1,0 +1,26 @@
+{
+  "blockedWebsites": [
+    {
+      "name": "google.com",
+      "enabled": true
+    },
+    {
+      "name": "facebook.com",
+      "enabled": false
+    }
+  ],
+  "blockedApps": [
+    {
+      "name": "chrome.exe",
+      "enabled": false
+    },
+    {
+      "name": "facebook.exe",
+      "enabled": true
+    },
+    {
+      "name": "Instagram.exe",
+      "enabled": false
+    }
+  ]
+}

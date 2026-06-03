@@ -177,5 +177,13 @@ public class BlockController {
         // data放入JsonManager儲存成Json
         JsonManager.save(data);
 
-}
+    }
+
+    public VBox getListContainer() {
+        return this.listContainer;
+    }
+
+    public FlowPane getListContainer2() {
+        return this.listContainer2;
+    }
 }
