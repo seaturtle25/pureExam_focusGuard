@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.StackPane?>
+
+
+<VBox spacing="20" styleClass="page" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group14.CreateExamController">
+
+    <padding>
+        <Insets bottom="30" left="30" right="30" top="30" />
+    </padding>
+
+
+    <!-- Input 區 -->
+    <HBox spacing="10">
+
+        <TextField  fx:id="websiteField" 
+                    prefHeight="40.0" 
+                    promptText="請輸入欲封鎖網址" 
+                    HBox.hgrow="ALWAYS" />
+
+        <Button     onAction="#addWebsite" 
+                    prefHeight="40.0" 
+                    text="Add" />
+
+    </HBox>
+
+    <Separator orientation="HORIZONTAL" />
+
+    <!-- Scroll Area -->
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background: transparent; -fx-background-color: transparent;" VBox.vgrow="ALWAYS" >
+
+        <content>
+
+            <VBox   fx:id="websiteContainer" 
+                    prefHeight="-1" 
+                    spacing="15" />
+
+        </content>
+
+    </ScrollPane>
+
+    <!-- Input 區 -->
+    <HBox spacing="10">
+
+        <TextField  fx:id="appField" 
+                    prefHeight="40.0" 
+                    promptText="請輸入欲封鎖軟體" 
+                    HBox.hgrow="ALWAYS">
+                    <font>
+                   <Font size="15.0" />
+                </font>
+        </TextField>        
+
+        <Button     onAction="#addApp" 
+                    prefHeight="40.0" 
+                    text="Add" />
+
+    </HBox>
+
+    <Separator orientation="HORIZONTAL" />
+
+    <!-- Scroll Area -->
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="NEVER" style="-fx-background: transparent; -fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+
+        <content>
+
+            <FlowPane   fx:id="appContainer" 
+                        hgap="15" 
+                        
+                        vgap="15" />
+
+        </content>
+
+    </ScrollPane>
+    
+    <TextField      fx:id="minuteField" 
+                    prefHeight="30.0"
+                    maxWidth="120" 
+                    promptText="請輸入考試時間(分)"  />
+
+    <HBox spacing="10" alignment="CENTER" VBox.vgrow="ALWAYS">   
+
+    <Button text="GO BACK" 
+            style="-fx-background-color: #8A9597;" 
+            textFill="WHITE"
+            onAction="#goBackHome">
+          <font>
+                   <Font name="System Bold" size="15.0" />
+                </font>
+    </Button>               
+
+
+    <!--儲存變更-->
+    <Button text="DOWNLOAD"
+            style="-fx-background-color: #8A9597;"
+            textFill="WHITE"
+            onAction="#saveExam">
+            <font>
+                   <Font name="System Bold" size="15.0" />
+                </font>
+    </Button>    
+    </HBox>        
+
+</VBox>
