@@ -29,3 +29,9 @@ target/
 
 .idea/
 nbactions.xml
+
+History.csv
+StudyRecord.json
+block_data.json
+exam.json
+*.oasis
