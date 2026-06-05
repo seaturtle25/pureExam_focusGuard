@@ -1,0 +1,30 @@
+{
+  "blockedWebsites": [
+    {
+      "name": "google.com",
+      "enabled": true
+    },
+    {
+      "name": "facebook.com",
+      "enabled": true
+    },
+    {
+      "name": "https://www.ntou.edu.tw/",
+      "enabled": false
+    }
+  ],
+  "blockedApps": [
+    {
+      "name": "discord.exe",
+      "enabled": true
+    },
+    {
+      "name": "facebook.exe",
+      "enabled": false
+    },
+    {
+      "name": "Instagram.exe",
+      "enabled": false
+    }
+  ]
+}

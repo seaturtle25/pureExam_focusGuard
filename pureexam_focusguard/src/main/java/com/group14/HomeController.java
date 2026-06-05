@@ -3,44 +3,88 @@ package com.group14;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.geometry.Pos;
+import java.io.IOException;
+
 
 public class HomeController {
 
-    //按鈕們
-    @FXML private Button focusModeBtn;
-    @FXML private Button examModeBtn;
+    @FXML
+    private Button focusBtn; 
 
     @FXML
-    private void startFocusMode() throws IOException {
-        PomodoroController.isExamMode = false;
-        goToPomodoro();
+    private void initialize() {
+
     }
 
     @FXML
-    private void startExamMode() throws IOException {
-        PomodoroController.isExamMode = true;
-        goToPomodoro();
-    }
+    private void startFocus() {
+        try {
 
-    //局部換頁
-    private void goToPomodoro() throws IOException {
-        //讀取番茄鐘的畫面
-        Parent pomodoroView = FXMLLoader.load(getClass().getResource("/fxml/pomodoro.fxml"));
-        
-        //抓到整個視窗最底層的BorderPane
-        BorderPane root = (BorderPane) focusModeBtn.getScene().getRoot();
+            MainApp.setRoot("sidebar", "Oasis");
 
-        //把 BorderPane正中央的區塊抓出來
-        StackPane contentArea = (StackPane) root.getCenter();
-        
-        if (contentArea != null) {
-            contentArea.getChildren().clear(); // 清除大廳畫面
-            contentArea.getChildren().add(pomodoroView); // 塞入番茄鐘畫面
+        } catch (IOException e) {
+
+            System.err.println("無法載入 sidebar.fxml");
+            e.printStackTrace();
         }
     }
+
+    @FXML
+    private void startTest() throws IOException {
+       
+        Stage dialog = new Stage();
+
+        VBox root = new VBox(30);
+        root.setAlignment(Pos.CENTER);
+        root.setPrefSize(300, 150);
+
+        Button createBtn = new Button("建立考試");
+        Button enterBtn = new Button("進入考試");
+
+        enterBtn.setOnAction(e -> {
+
+        try {
+            MainApp.setRoot("enterExam", "Oasis");
+            dialog.close();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    });
+
+    createBtn.setOnAction(e -> {
+
+        try {
+            MainApp.setRoot("createExam", "Oasis");
+            dialog.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    });
+
+        HBox buttons = new HBox(20);
+        buttons.setAlignment(Pos.CENTER);
+        buttons.getChildren().addAll(createBtn, enterBtn);
+
+        root.getChildren().addAll(
+            buttons
+        );
+
+        Scene scene = new Scene(root);
+
+        dialog.setScene(scene);
+        dialog.show();
+    
+    }
+
+
 }
+

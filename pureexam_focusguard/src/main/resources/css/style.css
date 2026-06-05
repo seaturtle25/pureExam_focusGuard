@@ -1,14 +1,86 @@
-.sidebar-button {
+.sidebar {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #dddddd;
+}
 
+.sidebar-label {
+    -fx-font-size: 24px; 
+    -fx-font-weight: bold;
+}
+
+.sidebar-button {
     -fx-background-color: transparent;
     -fx-font-size: 16px;
     -fx-cursor: hand;
-
 }
 
 .sidebar-button:hover {
-
     -fx-border-color: white white black white;
     -fx-background-color: rgb(255, 255, 255);
     
+}
+
+.page {
+    -fx-background-color: #f7f6e8ef;
+}
+
+.page-label {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.chart {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-padding: 10;
+}
+
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+/* 柱狀圖 */
+.default-color0.chart-bar {
+    -fx-bar-fill: #8A9597;
+}
+
+/* Hover效果 */
+.default-color0.chart-bar:hover {
+    -fx-bar-fill: #6f797b;
+}
+
+/* X軸文字 */
+.axis {
+    -fx-tick-label-fill: #666666;
+}
+
+/* 軸標線 */
+.axis-line {
+    -fx-stroke: #cccccc;
+}
+
+/* 網格線 */
+.chart-horizontal-grid-lines {
+    -fx-stroke: #e5e5e5;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: transparent;
+}
+
+/* 圖例 */
+.chart-legend {
+    -fx-background-color: transparent;
+}
+
+.static-label {
+    -fx-font-size: 16px;
+}
+
+#violationContainer {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-font-size: 16px;
 }
