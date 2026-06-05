@@ -15,12 +15,11 @@ public class MainApp extends Application {
     @Override
     public void start(@SuppressWarnings("exports") Stage s) throws IOException {
         stage=s;
-        setRoot("primary","Focus Guard");
+        setRoot("home" ,"Oasis");
+        stage.setWidth(650);
+        stage.setHeight(600);   
+        stage.show();
     }
-
-    static void setRoot(String fxml) throws IOException {
-        setRoot(fxml,stage.getTitle());
-    } 
 
     static void setRoot(String fxml, String title) throws IOException {
         Scene scene = new Scene(loadFXML(fxml));
@@ -31,13 +30,10 @@ public class MainApp extends Application {
         );
         stage.setTitle(title);
         stage.setScene(scene);
-        stage.setWidth(650);
-        stage.setHeight(600);
-        stage.show();
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/fxml/"+fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/fxml/"+ fxml + ".fxml"));
         return fxmlLoader.load();
     }
 

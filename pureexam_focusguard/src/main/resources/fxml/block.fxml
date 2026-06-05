@@ -13,64 +13,61 @@
 <?import javafx.scene.layout.StackPane?>
 
 
-<VBox spacing="20" style="-fx-background-color: #f7f6e8ef;" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group14.BlockController">
+<VBox spacing="20" styleClass="page" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group14.BlockController">
 
-    <!-- padding -->
     <padding>
         <Insets bottom="30" left="30" right="30" top="30" />
     </padding>
 
     <!--網址封鎖-->
-    <Label text="網址封鎖 Network Shield">
+    <Label text="網址封鎖 Network Shield"
+           styleClass="page-label"/>
 
-        <font>
-            <Font size="22" />
-        </font>
-
-    </Label>
 
     <!-- Input 區 -->
     <HBox spacing="10">
 
-        <!-- TextField -->
-        <TextField fx:id="urlField" prefHeight="30.0" promptText="輸入網址..." HBox.hgrow="ALWAYS" />
+        <TextField  fx:id="urlField" 
+                    prefHeight="30.0" 
+                    promptText="輸入網址..." 
+                    HBox.hgrow="ALWAYS" />
 
-        <!-- Add Button -->
-        <Button onAction="#urlAdd" prefHeight="30.0" text="Add" />
+        <Button     onAction="#urlAdd" 
+                    prefHeight="30.0" 
+                    text="Add" />
 
     </HBox>
 
     <Separator orientation="HORIZONTAL" />
 
     <!-- Scroll Area -->
-    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="NEVER" style="-fx-background: transparent; -fx-background-color: transparent;" VBox.vgrow="ALWAYS" prefHeight="250">
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background: transparent; -fx-background-color: transparent;" VBox.vgrow="ALWAYS" prefHeight="250">
 
         <content>
 
-            <!-- 動態 List -->
-            <VBox fx:id="listContainer" prefWidth="600" prefHeight="400" spacing="15" />
+            <VBox   fx:id="listContainer" 
+                    prefHeight="-1" 
+                    spacing="15" />
 
         </content>
 
     </ScrollPane>
 
    <!--軟體封鎖-->
-    <Label text="軟體封鎖 Software Blocking">
+    <Label text="軟體封鎖 Software Blocking"
+           styleClass="page-label" />
 
-        <font>
-            <Font size="22" />
-        </font>
-
-    </Label>
-
-        <!-- Input 區 -->
+    <!-- Input 區 -->
     <HBox spacing="10">
 
-        <!-- TextField -->
-        <TextField fx:id="exeField" prefHeight="30.0" promptText="選擇軟體..." HBox.hgrow="ALWAYS" />
+        <TextField  fx:id="exeField" 
+                    prefHeight="30.0" 
+                    promptText="選擇軟體..." 
+                    HBox.hgrow="ALWAYS" />
 
-        <!-- Add Button -->
-        <Button  onAction="#exeAdd" prefHeight="30.0" text="Add" />
+        <Button     onAction="#exeAdd" 
+                    prefHeight="30.0" 
+                    text="Add" />
 
     </HBox>
 
@@ -81,7 +78,10 @@
 
         <content>
 
-            <FlowPane fx:id="listContainer2" hgap="15" prefWrapLength="600" vgap="15" />
+            <FlowPane   fx:id="listContainer2" 
+                        hgap="15" 
+                        prefWrapLength="600" 
+                        vgap="15" />
 
         </content>
 
