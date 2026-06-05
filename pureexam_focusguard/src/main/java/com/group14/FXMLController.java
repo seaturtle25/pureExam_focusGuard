@@ -20,18 +20,26 @@ public class FXMLController {
     @FXML
     public void initialize() {
 
-        showPage("pomodoro.fxml");
+        showPage("timer.fxml");
     }
 
     @FXML
-    private void showHome() throws IOException {
-
-        Parent homeView = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
-        homeBtn.getScene().setRoot(homeView);
+    private void showHome() {
+        try {
+            MainApp.setRoot("home", "Oasis");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }    
     }
 
     @FXML
-    private void showBlock() {
+    private void showTimer() {
+
+        showPage("timer.fxml");
+    }    
+
+    @FXML
+    private void showSettings() {
 
         showPage("block.fxml");
     }
@@ -40,6 +48,12 @@ public class FXMLController {
     private void showBrowser() {
         
         openNewWindow("browser.fxml");
+
+    }
+    
+    private void showHistory() {
+        
+        showPage("history.fxml");
     }
 
     private void showPage(String fxml) {
@@ -51,14 +65,13 @@ public class FXMLController {
             );
 
             Parent page = loader.load();
-
             contentArea.getChildren().clear();
-
             contentArea.getChildren().add(page);
 
         } catch (Exception e) {
-
+            System.err.println("無法載入");
             e.printStackTrace();
+
         }
     }
 

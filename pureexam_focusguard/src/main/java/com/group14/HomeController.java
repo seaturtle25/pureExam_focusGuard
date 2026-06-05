@@ -12,9 +12,8 @@ import javafx.stage.Stage;
 
 public class HomeController {
 
-    //按鈕們
-    @FXML private Button focusModeBtn;
-    @FXML private Button examModeBtn;
+    @FXML
+    private Button focusBtn; 
 
     @FXML
     private void startFocusMode() throws IOException {
@@ -67,12 +66,10 @@ public class HomeController {
         //抓到整個視窗最底層的BorderPane
         BorderPane root = (BorderPane) focusModeBtn.getScene().getRoot();
 
-        //把 BorderPane正中央的區塊抓出來
-        StackPane contentArea = (StackPane) root.getCenter();
-        
-        if (contentArea != null) {
-            contentArea.getChildren().clear(); // 清除大廳畫面
-            contentArea.getChildren().add(pomodoroView); // 塞入番茄鐘畫面
+        } catch (IOException e) {
+
+            System.err.println("無法載入 sidebar.fxml");
+            e.printStackTrace();
         }
     }*/
 }
