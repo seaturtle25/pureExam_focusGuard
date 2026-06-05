@@ -12,9 +12,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.stage.FileChooser;
+import com.google.gson.Gson;
 
 public class TeacherSetupController {
 
@@ -29,7 +28,19 @@ public class TeacherSetupController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/block.fxml"));
             Node blockNode = loader.load();
             blockController = loader.getController();
+            blockController.hideSaveButton();
             blockContainer.getChildren().add(blockNode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleBack() {
+        try {
+            Parent homeView = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
+            // 利用 timeField 當作媒介來抓取目前的 Scene
+            timeField.getScene().setRoot(homeView); 
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -39,13 +50,23 @@ public class TeacherSetupController {
     private void handleExport() {
         // 驗證時間
         String timeStr = timeField.getText().trim();
-        if (timeStr.isEmpty() || Integer.parseInt(timeStr) < 1) {
-            System.out.println("時間格式錯誤！");
-            return;
+        int min = 0;
+        
+        try {
+            if (timeStr.isEmpty()) throw new NumberFormatException();
+            min = Integer.parseInt(timeStr);
+            if (min < 1) throw new NumberFormatException();
+        } catch (NumberFormatException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("輸入錯誤");
+            alert.setHeaderText(null);
+            alert.setContentText("請輸入正確的考試時間 (不得小於 1 分鐘)！");
+            alert.showAndWait();
+            return; // 終止匯出
         }
 
-        List<String> activeUrls = new ArrayList<>();
-        List<String> activeApps = new ArrayList<>();
+        ExamBlockData examData = new ExamBlockData();
+        examData.setMin(min);
 
         // 掃描網址
         VBox urlContainer = blockController.getListContainer();
@@ -56,7 +77,7 @@ public class TeacherSetupController {
             
             // 切換到 "ON" ，算入黑名單
             if (toggle.isSelected()) {
-                activeUrls.add("\"" + label.getText() + "\"");
+                examData.getWebsites().add(label.getText());
             }
         }
 
@@ -67,15 +88,13 @@ public class TeacherSetupController {
             
             // 有打勾的，才算入黑名單
             if (checkBox.isSelected()) {
-                activeApps.add("\"" + checkBox.getText() + "\"");
+                examData.getApps().add(checkBox.getText());
             }
         }
 
-        // 打包成 JSON 設定格式
-        String jsonStr = String.format(
-            "{\"time\": %s, \"urls\": %s, \"apps\": %s}", 
-            timeStr, activeUrls.toString(), activeApps.toString()
-        );
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(examData);
+        System.out.println("準備加密的 JSON: " + jsonStr);
 
         // 加密成 .oasis 檔案，用 Base64 加密
         String encryptedData = Base64.getEncoder().encodeToString(jsonStr.getBytes(StandardCharsets.UTF_8));
@@ -90,6 +109,8 @@ public class TeacherSetupController {
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write(encryptedData);
                 System.out.println("成功匯出考試設定檔！");
+
+                //跳回首頁
                 Parent homeView = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
                 timeField.getScene().setRoot(homeView);
             } catch (Exception e) {

@@ -1,3 +1,5 @@
+<!-- 因，與 block.fxml 雷同，直接重用 block.fxml -->
+<!--
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
@@ -112,3 +114,4 @@
     </HBox>        
 
 </VBox>
+-->

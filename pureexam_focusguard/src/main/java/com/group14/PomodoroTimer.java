@@ -24,6 +24,7 @@ public class PomodoroTimer {
     private Timeline timeline;
     private int totalSeconds;
     private int initialMinutes; // 紀錄一開始設定的分鐘數
+    private Runnable onCompleteAction; //存結束要執行的動作
 
     //定義JSON紀錄的資料結構
     public static class StudyRecord {
@@ -75,6 +76,10 @@ public class PomodoroTimer {
         }
         this.totalSeconds = minutes * 60;
         updateLabel(timerLabel); // 重置時也要更新一次畫面
+    }
+
+    public void setOnCompleteAction(Runnable action) {  
+        this.onCompleteAction = action;
     }
 
     private void updateLabel(Label timerLabel) {
@@ -129,5 +134,9 @@ public class PomodoroTimer {
         
         //確保背景的進程監控(防作弊)被關閉
         ProcessMonitorTest.stop();
+
+        if (onCompleteAction != null) {
+            javafx.application.Platform.runLater(onCompleteAction);
+        }
     }
 }

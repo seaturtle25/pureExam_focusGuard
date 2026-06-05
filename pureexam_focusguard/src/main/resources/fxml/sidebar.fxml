@@ -51,6 +51,7 @@
                     styleClass="sidebar-button"/>
 
             <Button fx:id="browserBtn"
+                    onAction="#showBrowser"
                     prefHeight="35.0" 
                     prefWidth="120.0" 
                     text="BROWSER"

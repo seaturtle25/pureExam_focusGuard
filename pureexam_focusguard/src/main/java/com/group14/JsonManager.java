@@ -63,6 +63,7 @@ public class JsonManager {
         }
     }
     
+    /*
     //輸出考試建立json
     public static void saveExam(
         ExamBlockData data) {
@@ -78,7 +79,5 @@ public class JsonManager {
 
     } catch(Exception e) {
         e.printStackTrace();
-    }
-}
-
+    }*/
 }

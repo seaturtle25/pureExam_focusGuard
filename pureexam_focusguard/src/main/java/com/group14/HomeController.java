@@ -16,14 +16,14 @@ public class HomeController {
     private Button focusBtn; 
 
     @FXML
-    private void startFocusMode() throws IOException {
+    private void startFocus() throws IOException {
         PomodoroController.isExamMode = false;
-        switchPage("/fxml/primary.fxml");
+        switchPage("/fxml/sidebar.fxml");
         //goToPomodoro();
     }
 
     @FXML
-    private void startExamMode() throws IOException {
+    private void startTest() throws IOException {
         PomodoroController.isExamMode = true;
 
         try {
@@ -49,7 +49,7 @@ public class HomeController {
     public void switchPage(String fxml) {
         try{
             Parent newView = FXMLLoader.load(getClass().getResource(fxml));
-            focusModeBtn.getScene().setRoot(newView);
+            focusBtn.getScene().setRoot(newView);
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("無法導向頁面" + fxml);

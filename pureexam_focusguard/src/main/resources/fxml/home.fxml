@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -16,7 +17,7 @@
 
               <Button  fx:id="focusBtn"
                         style="-fx-background-color: #8A9597;" 
-                        text="讀書專注模式" textFill="WHITE"
+                        text="專注模式" textFill="WHITE"
                         onAction="#startFocus">
 
                   <font>
@@ -28,7 +29,7 @@
 
               <Button  
                       style="-fx-background-color: #8A9597;" 
-                      text="嚴格監考模式" 
+                      text="監考模式" 
                       onAction="#startTest"
                       textAlignment="JUSTIFY" textFill="WHITE">
                <font>
@@ -40,4 +41,4 @@
          </children>
       </HBox>
     </children>
-</VBox>
+</StackPane>

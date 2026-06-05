@@ -20,7 +20,7 @@ public class FXMLController {
     @FXML
     public void initialize() {
 
-        showPage("timer.fxml");
+        showPage("pomodoro.fxml");
     }
 
     @FXML
@@ -35,7 +35,7 @@ public class FXMLController {
     @FXML
     private void showTimer() {
 
-        showPage("timer.fxml");
+        showPage("pomodoro.fxml");
     }    
 
     @FXML
@@ -51,6 +51,7 @@ public class FXMLController {
 
     }
     
+    @FXML
     private void showHistory() {
         
         showPage("history.fxml");

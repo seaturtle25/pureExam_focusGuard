@@ -4,22 +4,28 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+
+import com.google.gson.Gson;
 
 public class StudentLoginController {
     
     @FXML private Button importBtn;
+    @FXML private VBox infoBox;
+    @FXML private Label examInfoLabel;
 
     private int examTime = 0;
-    private String urlsData = "";
-    private String appsData = "";
+    private List<String> appToBlock = new ArrayList<>();
+    private List<String> urlToBlock = new ArrayList<>();
 
     @FXML
     private void handleImport() {
@@ -40,17 +46,18 @@ public class StudentLoginController {
                 System.out.println("解碼成功！原始 JSON: " + jsonStr);
 
                 // 用 Gson 解析資料
-                JsonObject jsonObject = JsonParser.parseString(jsonStr).getAsJsonObject();
-                examTime = jsonObject.get("time").getAsInt();
-                urlsData = jsonObject.get("urls").toString();
-                appsData = jsonObject.get("apps").toString();
+                Gson gson = new Gson();
+                ExamBlockData loadedData = gson.fromJson(jsonStr, ExamBlockData.class);
+                examTime = loadedData.getMin();
+                appToBlock = loadedData.getApps();
+                urlToBlock = loadedData.getWebsites();
 
-                // 成功提示
-                Alert alert = new Alert(Alert.AlertType.NONE);
-                alert.setTitle("載入成功");
-                alert.setContentText("考試時間: " + examTime + " 分鐘\n請點擊「開始考試」。");
-                alert.getButtonTypes().setAll(ButtonType.OK);
-                alert.showAndWait();
+                importBtn.setVisible(false);
+                importBtn.setManaged(false);
+
+                infoBox.setVisible(true);
+                infoBox.setManaged(true);
+                examInfoLabel.setText("考試時間" + examTime + " 分鐘\n已套用封鎖軟體列表。");
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -75,11 +82,25 @@ public class StudentLoginController {
         try {
             // 傳給番茄鐘
             PomodoroController.isExamMode = true;
+            PomodoroController.loadedExamMinutes = this.examTime;
+            PomodoroController.examBlockedApps = this.appToBlock;
+            PomodoroController.examBlockedUrls = this.urlToBlock;
+
 
             Parent examView = FXMLLoader.load(getClass().getResource("/fxml/pomodoro.fxml"));
             importBtn.getScene().setRoot(examView);
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleBack() {
+        try {
+            Parent homeView = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
+            importBtn.getScene().setRoot(homeView);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
