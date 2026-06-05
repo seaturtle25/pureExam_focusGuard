@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.Parent;
 import java.io.File;
 import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
@@ -88,7 +89,9 @@ public class TeacherSetupController {
         if (file != null) {
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write(encryptedData);
-                System.out.println("老師成功匯出加密考題包！");
+                System.out.println("成功匯出考試設定檔！");
+                Parent homeView = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
+                timeField.getScene().setRoot(homeView);
             } catch (Exception e) {
                 e.printStackTrace();
             }
