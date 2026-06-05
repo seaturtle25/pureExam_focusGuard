@@ -88,7 +88,8 @@
     </ScrollPane>
 
     <!--儲存變更-->
-    <Button text="Save"
+    <Button fx:id="saveBtn"
+            text="Save"
             onAction="#handleSave"/>
 
 </VBox>

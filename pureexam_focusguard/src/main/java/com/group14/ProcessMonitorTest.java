@@ -1,7 +1,5 @@
 package com.group14;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,8 +11,6 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-import com.google.gson.Gson;
-
 import oshi.SystemInfo;
 import oshi.software.os.OSProcess;
 import oshi.software.os.OperatingSystem;
@@ -24,9 +20,52 @@ public class ProcessMonitorTest {
     private static OperatingSystem os = systemInfo.getOperatingSystem();
     private static final String LOG_FILE_PATH = "History.csv";
     private static ScheduledExecutorService executor;
+
     public static void start(){ 
         if (executor != null && !executor.isShutdown()) return;
         List<String> dynamicBlackList = new ArrayList<>();
+
+        if (PomodoroController.isExamMode) {
+            //考試模式
+            if (PomodoroController.examBlockedApps != null) {
+                for (String appName : PomodoroController.examBlockedApps) {
+                    dynamicBlackList.add(appName.toLowerCase().replace(".exe", ""));
+                }
+            }
+        } else {
+            //一般模式
+            BlockData normalData = JsonManager.load();
+            if (normalData != null && normalData.getBlockedApps() != null) {
+                for (BlockItem item : normalData.getBlockedApps()) {
+                    if (item.isEnabled()) {
+                        dynamicBlackList.add(item.getName().toLowerCase().replace(".exe", ""));
+                    }
+                }
+            }
+        }
+
+        if (dynamicBlackList.isEmpty()) {
+            dynamicBlackList.addAll(Arrays.asList("chrome", "msedge", "firefox", "brave", "opera", "safari", "vivaldi", "tor", "chromium", "edge"));
+        }
+
+        executor = Executors.newSingleThreadScheduledExecutor();
+        Runnable monitorTask = () -> {
+            List<OSProcess> processes = os.getProcesses();
+            for(OSProcess process : processes){
+                String pName = process.getName().toLowerCase();
+                for(String blockApp : dynamicBlackList){
+                    if(pName.contains(blockApp)){
+                        killProcess(blockApp + ".exe");
+                        logToCSV(blockApp + ".exe");
+                        break;
+                    }
+                }
+            }
+        };
+
+        executor.scheduleAtFixedRate(monitorTask, 0, 3, java.util.concurrent.TimeUnit.SECONDS);
+
+        /*
         File settingFile = new File("exam_block_data.json");
         if (settingFile.exists()) {
             try (FileReader reader = new FileReader(settingFile)) {
@@ -70,10 +109,10 @@ public class ProcessMonitorTest {
                 for(int i = 0; i < Math.min(30, processes.size()); i++){
                     System.out.println(processes.get(i).getName());
                 }
-            }*/
+            }
         };
         
-        executor.scheduleAtFixedRate(monitorTask, 0, 3, java.util.concurrent.TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(monitorTask, 0, 3, java.util.concurrent.TimeUnit.SECONDS);*/
     }
     
     public static void stop() {

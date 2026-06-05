@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group14.StudentLoginController">
+   
+   <top>
+      <Button mnemonicParsing="false" onAction="#handleBack" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-text-fill: #8A9597; -fx-font-weight: bold; -fx-font-size: 14px;" text="← 返回首頁" BorderPane.alignment="TOP_LEFT">
+         <BorderPane.margin>
+            <Insets left="20.0" top="20.0" />
+         </BorderPane.margin>
+      </Button>
+   </top>
+
+   <center>
+      <VBox alignment="CENTER" spacing="30.0">
+         <children>
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="OASIS 考試模式" />
+            <Label style="-fx-font-size: 14px; -fx-text-fill: #666666;" text="請先匯入由老師提供的考試設定檔，完成後即可開始考試。" />
+            
+            <Button fx:id="importBtn" mnemonicParsing="false" onAction="#handleImport" prefHeight="60.0" prefWidth="280.0" style="-fx-font-size: 16px; -fx-cursor: hand;" text="選擇考試設定檔 (.oasis)" />
+            
+            <VBox fx:id="infoBox" alignment="CENTER" managed="false" spacing="10.0" style="-fx-background-color: #E8F5E9; -fx-padding: 15; -fx-background-radius: 10;" visible="false">
+               <children>
+                  <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2E7D32;" text="考卷載入成功！" />
+                  <Label fx:id="examInfoLabel" style="-fx-font-size: 16px; -fx-text-fill: #1B5E20;" text="考試時間: -- 分鐘" />
+               </children>
+            </VBox>
+            
+            <Button mnemonicParsing="false" onAction="#handleStartExam" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="開始考試" />
+         </children>
+         
+         <padding>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="10.0" />
+         </padding>
+      </VBox>
+   </center>
+   
+</BorderPane>

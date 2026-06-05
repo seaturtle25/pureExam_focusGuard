@@ -9,6 +9,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
@@ -17,7 +20,10 @@ import javafx.scene.layout.BorderPane;
 public class PomodoroController {
 
     //用來接收HomeController傳過來的模式設定
-    public static boolean isExamMode = false; 
+    public static boolean isExamMode = false;
+    public static int loadedExamMinutes = 0;
+    public static List<String> examBlockedApps = new ArrayList<>();
+    public static List<String> examBlockedUrls = new ArrayList<>();
 
     @FXML private Button backBtn;
     @FXML private Spinner<Integer> timeSpinner;
@@ -33,6 +39,32 @@ public class PomodoroController {
     public void initialize() {
         timer = new PomodoroTimer();
         
+        timer.setOnCompleteAction(() -> {
+            if (isExamMode) {
+                // 解除防作弊鎖
+                disableAntiCheatLock();
+                
+                // 彈出考試結束視窗
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("考試結束");
+                alert.setHeaderText(null);
+                alert.setContentText("考試時間到！即將返回首頁。");
+                alert.showAndWait();
+                
+                // 把畫面切回首頁
+                try {
+                    Parent homeView = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
+                    timerLabel.getScene().setRoot(homeView);
+                } catch (IOException e) { e.printStackTrace(); }
+            } else {
+                // 一般專注模式，只彈出休息提示
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("專注時間結束！休息一下吧。");
+                alert.show();
+            }
+        });
+
         // 設定滾輪：最小 1 分，最大 120 分，預設 25 分
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 120, 25);
         timeSpinner.setValueFactory(valueFactory);
@@ -49,6 +81,13 @@ public class PomodoroController {
         //根據進來時的模式，給予不同的提示與介面調整
         if (isExamMode) {
             statusLabel.setText("目前為考試模式，開始後將無法暫停與跳出！");
+            
+            if (loadedExamMinutes > 0) {
+                timeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 120, loadedExamMinutes));
+                timer.reset(timerLabel, loadedExamMinutes);
+            }
+            javafx.application.Platform.runLater(() -> handleStart());
+
         } else {
             statusLabel.setText("請設定時間並按下開始計時");
         }
@@ -78,7 +117,7 @@ public class PomodoroController {
             statusLabel.setText("狀態：嚴格監考中 (防作弊已啟動！)");
             pauseBtn.setDisable(true);
             resetBtn.setDisable(true);
-            backBtn.setDisable(true); //考試中不准回首頁
+            //backBtn.setDisable(true); //考試中不准回首頁
             
             //啟動視窗鎖死
             enableAntiCheatLock();
@@ -87,7 +126,7 @@ public class PomodoroController {
             statusLabel.setText("狀態：讀書專注中");
             pauseBtn.setDisable(false);
             resetBtn.setDisable(false);
-            backBtn.setDisable(true); //計時中先不讓學生亂切換畫面
+            //backBtn.setDisable(true); //計時中先不讓學生亂切換畫面
         }
     }
 
@@ -109,7 +148,7 @@ public class PomodoroController {
         //恢復所有按鈕原本的狀態
         startBtn.setDisable(false);
         timeSpinner.setDisable(false);
-        backBtn.setDisable(false);
+        //backBtn.setDisable(false);
         pauseBtn.setDisable(true);
         resetBtn.setDisable(true);
         
@@ -118,7 +157,7 @@ public class PomodoroController {
         ProcessMonitorTest.stop();
     }
 
-    @FXML
+    /*@FXML
     private void handleBack() throws IOException {
         //讀取大廳的畫面
         Parent homeView = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
@@ -133,7 +172,7 @@ public class PomodoroController {
             contentArea.getChildren().clear(); // 清除番茄鐘畫面
             contentArea.getChildren().add(homeView); // 塞回大廳畫面
         }
-    }
+    }*/
 
     // --- 動態防作弊鎖定機制 ---
     private void enableAntiCheatLock() {

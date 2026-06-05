@@ -1,12 +1,8 @@
 {
   "blockedWebsites": [
     {
-      "name": "google.com",
+      "name": "https://stu.ntou.edu.tw/p/412-1023-7602.php?Lang\u003dzh-tw",
       "enabled": true
-    },
-    {
-      "name": "facebook.com",
-      "enabled": false
     }
   ],
   "blockedApps": [
@@ -15,12 +11,8 @@
       "enabled": false
     },
     {
-      "name": "facebook.exe",
+      "name": "codeblocks.exe",
       "enabled": true
-    },
-    {
-      "name": "Instagram.exe",
-      "enabled": false
     }
   ]
 }

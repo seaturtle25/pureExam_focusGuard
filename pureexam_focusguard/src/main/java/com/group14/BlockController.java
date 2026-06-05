@@ -25,6 +25,9 @@ public class BlockController {
     private FlowPane listContainer2;
 
     @FXML
+    private Button saveBtn;
+
+    @FXML
     public void initialize() {
         // 預設，讀初始json
         BlockData data = JsonManager.load();
@@ -168,6 +171,13 @@ public class BlockController {
         // data放入JsonManager儲存成Json
         JsonManager.save(data);
 
+    }
+
+    public void hideSaveButton() {
+        if(saveBtn != null) {
+            saveBtn.setVisible(false);
+            saveBtn.setManaged(false);
+        }
     }
 
     public VBox getListContainer() {

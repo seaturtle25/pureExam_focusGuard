@@ -27,13 +27,14 @@
                     styleClass="sidebar-button"/>
                 
             <Button fx:id="blockBtn" 
-                    onAction="#showBlock" 
+                    onAction="#showSettings" 
                     prefHeight="35.0" 
                     prefWidth="120.0"
                     text="🚫 Block List"
                     styleClass="sidebar-button"/>
 
             <Button fx:id="historyBtn" 
+                    onAction="#showHistory"
                     prefHeight="35.0" 
                     prefWidth="120.0" 
                     text="History"

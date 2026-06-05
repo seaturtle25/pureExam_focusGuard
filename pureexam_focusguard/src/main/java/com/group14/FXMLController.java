@@ -7,9 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class FXMLController {
+
+    @FXML private Button homeBtn;
 
     @FXML
     private StackPane contentArea;
@@ -17,7 +20,7 @@ public class FXMLController {
     @FXML
     public void initialize() {
 
-        showPage("timer.fxml");
+        showPage("pomodoro.fxml");
     }
 
     @FXML
@@ -32,7 +35,7 @@ public class FXMLController {
     @FXML
     private void showTimer() {
 
-        showPage("timer.fxml");
+        showPage("pomodoro.fxml");
     }    
 
     @FXML
@@ -48,6 +51,7 @@ public class FXMLController {
 
     }
     
+    @FXML
     private void showHistory() {
         
         showPage("history.fxml");
