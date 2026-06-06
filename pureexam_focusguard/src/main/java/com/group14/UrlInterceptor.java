@@ -1,5 +1,6 @@
 package com.group14;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,10 +35,38 @@ public class UrlInterceptor {
         //遍歷黑名單，檢查網址
         for (String blocked : AI_BLACKLIST) {
             if (lowerCaseUrl.contains(blocked)) {
-                System.out.println("攔截: 嘗試存取 AI 工具: " + blocked);
                 return false; 
             }
         }
+
+        //修:沒攔截到網址(專注和考試模式都要檢查)，再檢查動態網址
+        List<String> dynamicUrls = new ArrayList<>();
+        if (PomodoroController.isExamMode){
+            // 考試模式：讀取老師出卷時設定的網址
+            if (PomodoroController.examBlockedUrls != null) {
+                for(String u : PomodoroController.examBlockedUrls) {
+                     dynamicUrls.add(u.toLowerCase());
+                }
+            }
+        }
+        else {
+            // 一般專注模式：讀取學生自己設定的 BlockData JSON
+            BlockData data = JsonManager.load();
+            if (data != null && data.getBlockedWebsites() != null) {
+                for (BlockItem item : data.getBlockedWebsites()) {
+                    if (item.isEnabled()) {
+                        dynamicUrls.add(item.getName().toLowerCase());
+                    }
+                }
+            }
+        }
+        //檢查是否有踩到動態黑名單
+        for (String blockedUrl : dynamicUrls) {
+            if (lowerCaseUrl.contains(blockedUrl)) {
+                return false;
+            }
+        }
+
         return true; //通過
     }
 

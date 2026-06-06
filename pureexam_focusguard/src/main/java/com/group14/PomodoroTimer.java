@@ -129,8 +129,10 @@ public class PomodoroTimer {
             }
         }).start();
         
-        //寫入 StudyRecord.json 紀錄
-        logStudySessionToJson(initialMinutes);
+        //寫入 StudyRecord.json 紀錄 // 修:考試時不寫進去
+        if(!PomodoroController.isExamMode){
+            logStudySessionToJson(initialMinutes);
+        }
         
         //確保背景的進程監控(防作弊)被關閉
         ProcessMonitorTest.stop();
