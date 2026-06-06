@@ -5,9 +5,9 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class FXMLController {
@@ -17,10 +17,13 @@ public class FXMLController {
     @FXML
     private StackPane contentArea;
 
+    private Parent timerPage; // 修:記住當下時鐘，避免切換畫面被重置
+
     @FXML
     public void initialize() {
 
-        showPage("pomodoro.fxml");
+        showTimer();
+        //修:預設載入時，直接呼叫專屬的方法
     }
 
     @FXML
@@ -34,8 +37,16 @@ public class FXMLController {
 
     @FXML
     private void showTimer() {
-
-        showPage("pomodoro.fxml");
+        try {
+            //修:如果已經載入過，就直接使用記住的頁面，避免重置
+            if(timerPage == null) {
+                timerPage = FXMLLoader.load(getClass().getResource("/fxml/pomodoro.fxml"));
+            }
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(timerPage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }    
 
     @FXML
