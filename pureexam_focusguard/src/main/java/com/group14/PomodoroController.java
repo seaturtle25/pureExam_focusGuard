@@ -14,6 +14,7 @@ import java.util.List;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.BorderPane;
 
@@ -32,6 +33,7 @@ public class PomodoroController {
     @FXML private Label statusLabel;
     @FXML private Button pauseBtn;
     @FXML private Button resetBtn;
+    @FXML private Button browserBtn;
 
     private PomodoroTimer timer;
 
@@ -192,5 +194,32 @@ public class PomodoroController {
             stage.setAlwaysOnTop(false);
             stage.setOnCloseRequest(null); 
         }
+    }
+    
+    @FXML
+    private void openBrowser() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/fxml/browser.fxml")
+            );
+            Parent page = loader.load();
+
+            Stage newStage = new Stage();
+            newStage.setTitle("Oasis");
+
+            Scene scene = new Scene(page, 1024, 768);
+            newStage.setScene(scene);
+
+            newStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    //外部呼叫判斷visible
+    public void setButtonVisible(boolean visible) {
+        browserBtn.setVisible(visible);
+        browserBtn.setManaged(visible);
     }
 }

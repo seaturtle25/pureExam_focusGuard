@@ -72,5 +72,13 @@
                 <Insets top="10.0" />
             </VBox.margin>
         </HBox>
+            <Button fx:id="browserBtn" onAction="#openBrowser" visible="false" style="-fx-background-color: transparent; -fx-border-color: #8A9597; -fx-border-radius: 5; -fx-text-fill: #8A9597; -fx-cursor: hand;" text="Browser">
+                <font>
+                    <Font size="14.0" />
+                </font>
+                <padding>
+                    <Insets bottom="6.0" left="20.0" right="20.0" top="6.0" />
+                </padding>
+            </Button>
     </children>
 </VBox>

@@ -25,8 +25,7 @@ public class HistoryManager {
 
         List<ViolationRecord> result = new ArrayList<>();
 
-        for (Map.Entry<String,Integer> entry
-                : countMap.entrySet()) {
+        for (Map.Entry<String,Integer> entry : countMap.entrySet()) {
 
             result.add(
                     new ViolationRecord(
@@ -62,7 +61,7 @@ public class HistoryManager {
 
             // 超過7天直接忽略
             if (date.isBefore(today.minusDays(6)) || date.isAfter(today)) {
-            continue;
+                continue;
             }
 
             String dateLabel = date.format(labelFormatter);

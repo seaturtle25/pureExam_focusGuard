@@ -87,7 +87,10 @@ public class StudentLoginController {
             PomodoroController.examBlockedUrls = this.urlToBlock;
 
 
-            Parent examView = FXMLLoader.load(getClass().getResource("/fxml/pomodoro.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/pomodoro.fxml"));
+            Parent examView = loader.load();
+            PomodoroController pomodoroController = loader.getController();
+            pomodoroController.setButtonVisible(true);
             importBtn.getScene().setRoot(examView);
 
         } catch (Exception e) {

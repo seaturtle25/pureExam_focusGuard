@@ -67,8 +67,15 @@ public class HistoryController {
         if (!historyData.getFocusRecords().isEmpty())
             average = total / historyData.getFocusRecords().size();
 
-        totalFocusLabel.setText("本週專注時間：" + total / 60 + " 小時");
-        averageFocusLabel.setText("平均每日專注時間：" + average + " 分鐘");
+        if (total > 60)
+            totalFocusLabel.setText("本週專注時間: " + total / 60 + "小時 " + total % 60 + "分鐘");
+        else if (total < 60) 
+            totalFocusLabel.setText("本週專注時間: " + total + "分鐘");
+
+        if(average > 60)
+            averageFocusLabel.setText("平均每日專注時間: " + average / 60  + "小時 " + average % 60 + "分鐘");
+        else if (average < 60)
+            averageFocusLabel.setText("平均每日專注時間: " + average + "分鐘");
     }
 
     private void loadViolations() {
