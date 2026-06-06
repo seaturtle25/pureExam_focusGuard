@@ -62,7 +62,8 @@ public class BrowserTabController {
                     function crushAIElements() {
                         let allElems = document.querySelectorAll('*');
                         for(let i=0; i<allElems.length; i++) {
-                            if(allElems[i].innerText === 'AI 模式') {
+                            var text = allElems[i].innerText;
+                            if(text === 'AI 模式' || text === '相關問題' || text === 'People also ask') {
                                 let target = allElems[i].closest('a, button, [role="button"], [role="link"], [jsname]');
                                 if(!target) {
                                     target = allElems[i];
