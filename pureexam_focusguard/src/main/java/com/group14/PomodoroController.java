@@ -64,6 +64,8 @@ public class PomodoroController {
             } else {
                 // 一般專注模式，只彈出休息提示
                 Alert alert = new Alert(AlertType.INFORMATION);
+                // 關掉 hosts 封鎖
+                HostsManager.disableFocusMode();
                 alert.setHeaderText(null);
                 alert.setContentText("專注時間結束！休息一下吧。");
                 alert.show();
@@ -102,6 +104,14 @@ public class PomodoroController {
 
     @FXML
     private void handleStart() {
+        if (!HostsManager.isHostsWritable()) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("系統權限錯誤");
+            alert.setContentText("無法啟動防護！請確認您已使用「系統管理員身分」執行，且系統 hosts 檔案未被設為唯讀。");
+            alert.showAndWait();
+            return; // 直接擋下，不給開始計時！
+        }
+
         int minutes = timeSpinner.getValue();
         
         // 考試模式下的防呆機制
@@ -120,6 +130,9 @@ public class PomodoroController {
         startBtn.setDisable(true);
         timeSpinner.setDisable(true);
         isRunning = true; //修:更新狀態為正在運行
+        
+        // 放要鎖的網址
+        List<String> domainsToBlock = new ArrayList<>();
 
         if (isExamMode) {
             statusLabel.setText("狀態：嚴格監考中 (防作弊已啟動！)");
@@ -127,16 +140,31 @@ public class PomodoroController {
             resetBtn.setDisable(true);
             //backBtn.setDisable(true); //考試中不准回首頁
             
+            if (PomodoroController.examBlockedUrls != null) {
+                domainsToBlock.addAll(PomodoroController.examBlockedUrls);
+            }
+
             //啟動視窗鎖死
             enableAntiCheatLock();
-            ProcessMonitorTest.start(); 
         } else {
             statusLabel.setText("狀態：讀書專注中");
             pauseBtn.setDisable(false);
             resetBtn.setDisable(false);
+
+            BlockData blockData = JsonManager.load();
+            if (blockData != null && blockData.getBlockedWebsites() != null) {
+                for (BlockItem item : blockData.getBlockedWebsites()) {
+                    if (item.isEnabled()) {
+                        domainsToBlock.add(item.getName());
+                    }
+                }
+            }
             //backBtn.setDisable(true); //計時中先不讓學生亂切換畫面
-            ProcessMonitorTest.start(); //修:專注模式下也封網址軟體
         }
+        
+        HostsManager.enableFocusMode(domainsToBlock);
+        ProcessMonitorTest.start();
+
     }
 
     @FXML
@@ -163,6 +191,7 @@ public class PomodoroController {
         
         //解除鎖定與防作弊進程
         disableAntiCheatLock();
+        HostsManager.disableFocusMode();
         ProcessMonitorTest.stop();
         isRunning = false; //修:更新狀態為未運行
     }

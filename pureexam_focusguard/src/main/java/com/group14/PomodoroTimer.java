@@ -64,12 +64,14 @@ public class PomodoroTimer {
         timeline.playFromStart();
         updateLabel(timerLabel);
     }
+    
     public void pause(){
         if (timeline != null && timeline.getStatus() == Animation.Status.RUNNING) {
             timeline.pause();
             System.out.println("計時已暫停");
         }
     }
+    
     public void reset(Label timerLabel, int minutes) {
         if(timeline != null) {
             timeline.stop();
