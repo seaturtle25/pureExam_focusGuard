@@ -35,6 +35,9 @@ public class ProcessMonitorTest {
 
         if (PomodoroController.isExamMode) {
             //考試模式
+
+            dynamicBlackList.addAll(defaultBrowsers); //修:考試模式一開始就把預設瀏覽器加入黑名單
+
             if (PomodoroController.examBlockedApps != null) {
                 for (String appName : PomodoroController.examBlockedApps) {
                     dynamicBlackList.add(appName.toLowerCase().replace(".exe", ""));
@@ -50,10 +53,6 @@ public class ProcessMonitorTest {
                     }
                 }
             }
-        }
-
-        if (dynamicBlackList.isEmpty()) {
-            dynamicBlackList.addAll(Arrays.asList("chrome", "msedge", "firefox", "brave", "opera", "safari", "vivaldi", "tor", "chromium", "edge"));
         }
 
         executor = Executors.newSingleThreadScheduledExecutor();
