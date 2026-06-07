@@ -29,6 +29,7 @@ public class TeacherSetupController {
             Node blockNode = loader.load();
             blockController = loader.getController();
             blockController.hideSaveButton();
+            blockController.clearAll();
             blockContainer.getChildren().add(blockNode);
         } catch (Exception e) {
             e.printStackTrace();

@@ -37,7 +37,13 @@ public class JsonManager {
 
         try (FileReader reader = new FileReader(FILE_NAME)) {
 
-            return gson.fromJson(reader, BlockData.class);
+            BlockData data = gson.fromJson(reader, BlockData.class);
+
+            if (data == null) {
+                return new BlockData();
+            }
+
+            return data;
 
         } catch (Exception e) {
 

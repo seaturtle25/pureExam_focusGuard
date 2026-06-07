@@ -14,6 +14,9 @@ public class MainApp extends Application {
 
     @Override
     public void start(@SuppressWarnings("exports") Stage s) throws IOException {
+        // 清掉可能殘留的網頁封鎖
+        HostsManager.disableFocusMode();
+
         stage=s;
         setRoot("home" ,"Oasis");
         stage.setWidth(650);
@@ -37,8 +40,25 @@ public class MainApp extends Application {
         return fxmlLoader.load();
     }
 
+    //攔截視窗右上角的叉叉
+    @Override
+    public void stop() throws Exception {
+        System.out.println("OASIS 系統關閉，清理檔案中...");
+        
+        HostsManager.disableFocusMode();
+        ProcessMonitorTest.stop();
+
+        System.exit(0);
+    }
     
     public static void main(String[] args) {
+        // 攔截被工作管理員強制終止、當機的情況，以防 host 卡住
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("JVM準備關閉，清理檔案中...");
+            HostsManager.disableFocusMode();
+            ProcessMonitorTest.stop();
+        }));
+
         launch(args);
     }
 

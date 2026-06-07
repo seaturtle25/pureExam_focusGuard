@@ -1,5 +1,7 @@
 package com.group14;
 
+import java.net.URI;
+
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -99,10 +101,31 @@ public class BlockController {
     @FXML
     private void urlAdd() {
 
-        String url = urlField.getText();
+        String url = urlField.getText().trim();
 
         if (url.isEmpty()) return; // 避免空字串
-        addWebsite(url, true);
+
+        try {
+            // 防呆: 補上開頭
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                url = "https://" + url;
+            }
+
+            // 只留下網域 (host只能直接鎖網域)
+            URI uri = new URI(url);
+            String domain = uri.getHost();
+
+            // 把 www. 去掉，封得更徹底
+            if (domain != null && domain.startsWith("www.")) {
+                domain = domain.substring(4);
+            }
+
+            addWebsite(domain, true);
+        } catch (Exception e) {
+            System.out.println("網址格式錯誤");
+        }
+
+        
 
         // 清空輸入框
         urlField.clear();
@@ -186,5 +209,14 @@ public class BlockController {
 
     public FlowPane getListContainer2() {
         return this.listContainer2;
+    }
+
+    public void clearAll() {
+        if (listContainer != null) {
+            listContainer.getChildren().clear();
+        }
+        if (listContainer2 != null) {
+            listContainer2.getChildren().clear();
+        }
     }
 }

@@ -29,7 +29,7 @@
 
         <TextField  fx:id="urlField" 
                     prefHeight="30.0" 
-                    promptText="輸入網址..." 
+                    promptText="輸入網址要封鎖的網站(如: youtube.com, facebook.com)" 
                     HBox.hgrow="ALWAYS" />
 
         <Button     onAction="#urlAdd" 
