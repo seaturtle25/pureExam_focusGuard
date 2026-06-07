@@ -7,7 +7,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet; // 引入 HashSet
 import java.util.List;
+import java.util.Set;     // 引入 Set
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -21,8 +23,14 @@ public class ProcessMonitorTest {
     private static final String LOG_FILE_PATH = "History.csv";
     private static ScheduledExecutorService executor;
 
+    //修:紀錄這場專注模式中，已經寫入過 CSV 的軟體
+    private static Set<String> loggedAppsThisSession = new HashSet<>(); // 修:放棄算次數，只記「這次專注回合裡，已經寫進 CSV 的軟體名字」
+
     public static void start(){ 
         if (executor != null && !executor.isShutdown()) return;
+        
+        loggedAppsThisSession.clear(); // 每次啟動監控前，先清空這次專注回合的紀錄，讓同一個軟體在不同回合都能被記錄一次
+        
         List<String> dynamicBlackList = new ArrayList<>();
 
         if (PomodoroController.isExamMode) {
@@ -51,12 +59,27 @@ public class ProcessMonitorTest {
         executor = Executors.newSingleThreadScheduledExecutor();
         Runnable monitorTask = () -> {
             List<OSProcess> processes = os.getProcesses();
+            // 新增：用來記錄這 3 秒的掃描週期內已經發送過 taskkill 的軟體
+            // 這樣就不會對著 Edge 的 20 個分頁連續印出 20 次 Force closing
+            Set<String> killedThisTick = new HashSet<>();
             for(OSProcess process : processes){
                 String pName = process.getName().toLowerCase();
                 for(String blockApp : dynamicBlackList){
                     if(pName.contains(blockApp)){
                         killProcess(blockApp + ".exe");
-                        logToCSV(blockApp + ".exe");
+                        // 修:確保這 3 秒內，我們只對它執行一次 killProcess() 和印出文字
+                        if (!killedThisTick.contains(blockApp + ".exe")) {
+                            killProcess(blockApp + ".exe");
+                            killedThisTick.add(blockApp + ".exe");
+                        }
+                        // 修:確保「不是考試模式」(只有專注模式才紀錄)
+                        // 修:確保「這個軟體今天還沒被寫進 CSV」(只列出攔截了什麼，不算重複次數)
+                        if (!PomodoroController.isExamMode) {
+                            if (!loggedAppsThisSession.contains(blockApp)) {
+                                logToCSV(blockApp + ".exe");
+                                loggedAppsThisSession.add(blockApp); // 記下名字，這次就不會再重複寫入了
+                            }
+                        }
                         break;
                     }
                 }
