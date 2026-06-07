@@ -67,6 +67,8 @@ public class PomodoroController {
                 alert.setHeaderText(null);
                 alert.setContentText("專注時間結束！休息一下吧。");
                 alert.show();
+
+                handleReset(); //修:自動重置回初始狀態
             }
         });
 
