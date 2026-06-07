@@ -26,6 +26,8 @@ public class PomodoroController {
     public static List<String> examBlockedApps = new ArrayList<>();
     public static List<String> examBlockedUrls = new ArrayList<>();
 
+    public static boolean isRunning = false; //修:紀錄當前倒計時是否正在運行，讓外部也能讀取
+
     @FXML private Button backBtn;
     @FXML private Spinner<Integer> timeSpinner;
     @FXML private Button startBtn;
@@ -42,6 +44,7 @@ public class PomodoroController {
         timer = new PomodoroTimer();
         
         timer.setOnCompleteAction(() -> {
+            isRunning = false; //修:倒計時結束後更新狀態
             if (isExamMode) {
                 // 解除防作弊鎖
                 disableAntiCheatLock();
@@ -114,6 +117,7 @@ public class PomodoroController {
         //點擊開始後，鎖定時間滾輪與開始按鈕，不給偷改
         startBtn.setDisable(true);
         timeSpinner.setDisable(true);
+        isRunning = true; //修:更新狀態為正在運行
 
         if (isExamMode) {
             statusLabel.setText("狀態：嚴格監考中 (防作弊已啟動！)");
@@ -129,6 +133,7 @@ public class PomodoroController {
             pauseBtn.setDisable(false);
             resetBtn.setDisable(false);
             //backBtn.setDisable(true); //計時中先不讓學生亂切換畫面
+            ProcessMonitorTest.start(); //修:專注模式下也封網址軟體
         }
     }
 
@@ -157,6 +162,7 @@ public class PomodoroController {
         //解除鎖定與防作弊進程
         disableAntiCheatLock();
         ProcessMonitorTest.stop();
+        isRunning = false; //修:更新狀態為未運行
     }
 
     /*@FXML

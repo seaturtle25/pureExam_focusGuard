@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -28,6 +30,14 @@ public class FXMLController {
 
     @FXML
     private void showHome() {
+        if (PomodoroController.isRunning) {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("注意");
+            alert.setHeaderText(null);
+            alert.setContentText("目前正在專注計時中，請先重置計時器後再返回首頁！");
+            alert.showAndWait();
+            return; // 修:攔截，提早結束方法，不執行下面的 setRoot
+        }
         try {
             MainApp.setRoot("home", "Oasis");
         } catch (IOException e) {
