@@ -1,5 +1,12 @@
 package com.group14;
 
+<<<<<<< Updated upstream
+=======
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+
+>>>>>>> Stashed changes
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -25,6 +32,23 @@ public class BlockController {
     private FlowPane listContainer2;
 
     @FXML
+<<<<<<< Updated upstream
+=======
+    private Button saveBtn;
+
+    private boolean deleteMode = false;
+
+    @FXML
+    private Button selectBtn;
+
+    @FXML
+    private Button deleteBtn;
+
+    @FXML
+    private Button cancelBtn;
+
+    @FXML
+>>>>>>> Stashed changes
     public void initialize() {
         // 預設，讀初始json
         BlockData data = JsonManager.load();
@@ -46,6 +70,10 @@ public class BlockController {
     }
     
     private void addWebsite(String url, boolean enabled) {
+        
+        CheckBox selectBox = new CheckBox();
+        selectBox.setVisible(false);
+        selectBox.setManaged(false);
 
         Label urlLabel = new Label(url);
         urlLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: black;");
@@ -80,7 +108,7 @@ public class BlockController {
         HBox.setHgrow(urlLabel, Priority.ALWAYS);
         urlLabel.setMaxWidth(Double.MAX_VALUE);
 
-        item.getChildren().addAll(urlLabel, toggle);
+        item.getChildren().addAll(selectBox, urlLabel, toggle);
         listContainer.getChildren().add(item);
     }
 
@@ -142,8 +170,8 @@ public class BlockController {
         // 網址
         for (Node node : listContainer.getChildren()) {
             HBox item = (HBox) node;
-            Label label = (Label) item.getChildren().get(0);
-            ToggleButton toggle = (ToggleButton) item.getChildren().get(1);
+            Label label = (Label) item.getChildren().get(1);
+            ToggleButton toggle = (ToggleButton) item.getChildren().get(2);
             
             // data加入label和toggle
             data.getBlockedWebsites().add(
@@ -177,4 +205,133 @@ public class BlockController {
     public FlowPane getListContainer2() {
         return this.listContainer2;
     }
+<<<<<<< Updated upstream
+=======
+
+    public void clearAll() {
+        if (listContainer != null) {
+            listContainer.getChildren().clear();
+        }
+        if (listContainer2 != null) {
+            listContainer2.getChildren().clear();
+        }
+    }
+
+    @FXML // 切換成刪除模式
+    private void toggleDeleteMode() {
+
+        deleteMode = !deleteMode;
+
+        selectBtn.setVisible(false);
+        selectBtn.setManaged(false);
+
+        deleteBtn.setVisible(true);
+        deleteBtn.setManaged(true);
+
+        cancelBtn.setVisible(true);
+        cancelBtn.setManaged(true);
+
+        for(Node node : listContainer.getChildren()) {
+
+            HBox item = (HBox) node;
+
+            CheckBox box = (CheckBox)item.getChildren().get(0);
+
+            ToggleButton toggle = (ToggleButton)item.getChildren().get(2);
+
+            box.setVisible(deleteMode);
+            box.setManaged(deleteMode);
+
+            toggle.setVisible(!deleteMode);
+            toggle.setManaged(!deleteMode);
+        }
+
+        // 軟體區
+        for(Node node : listContainer2.getChildren()) {
+
+            CheckBox box = (CheckBox)node;
+
+            if(deleteMode) {
+
+                box.setSelected(false);
+            }
+        }
+    }
+    
+    // 刪除選取項目
+    @FXML
+    private void deleteSelected() {
+        
+        // 刪網址
+        List<Node> removeWebsite = new ArrayList<>();
+
+        for(Node node : listContainer.getChildren()) {
+
+            HBox item = (HBox) node;
+
+            CheckBox box = (CheckBox)item.getChildren().get(0);
+
+            if(box.isSelected()) {
+                removeWebsite.add(item);
+            }
+        }
+
+        listContainer.getChildren().removeAll(removeWebsite);
+        
+        // 刪軟體
+        List<Node> removeApps = new ArrayList<>();
+
+        for(Node node : listContainer2.getChildren()) {
+
+            CheckBox box = (CheckBox)node;
+
+            if(box.isSelected()) {
+
+                removeApps.add(box);
+            }
+        }
+
+        listContainer2.getChildren().removeAll(removeApps);
+    
+        cancelDeleteMode();
+    }
+
+    // 切回封鎖模式
+    @FXML
+    private void cancelDeleteMode() {
+
+        deleteMode = false;
+
+        selectBtn.setVisible(true);
+        selectBtn.setManaged(true);
+
+        deleteBtn.setVisible(false);
+        deleteBtn.setManaged(false);
+
+        cancelBtn.setVisible(false);
+        cancelBtn.setManaged(false);
+
+        for(Node node : listContainer.getChildren()) {
+
+            HBox item = (HBox) node;
+
+            CheckBox box = (CheckBox)item.getChildren().get(0);
+            ToggleButton toggle = (ToggleButton)item.getChildren().get(2);
+
+            box.setVisible(false);
+            box.setManaged(false);
+            box.setSelected(false);
+
+            toggle.setVisible(true);
+            toggle.setManaged(true);
+        }
+
+        for(Node node : listContainer2.getChildren()) {
+
+            CheckBox box = (CheckBox)node;
+
+            box.setSelected(false);
+        }
+    }
+>>>>>>> Stashed changes
 }

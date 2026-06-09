@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Region?>
 
 
 <VBox spacing="20" styleClass="page" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group14.BlockController">
@@ -87,8 +88,34 @@
 
     </ScrollPane>
 
+<<<<<<< Updated upstream
     <!--儲存變更-->
     <Button text="Save"
+=======
+
+    <HBox spacing="10">
+
+    <Button fx:id="saveBtn"
+            text="Save"
+>>>>>>> Stashed changes
             onAction="#handleSave"/>
 
+    <Region HBox.hgrow="ALWAYS" />
+
+    <Button fx:id="selectBtn"
+            text="Select"
+            onAction="#toggleDeleteMode"/>
+
+    <Button fx:id="deleteBtn"
+            text="Delete"
+            onAction="#deleteSelected"
+            visible="false"
+            managed="false"/>
+
+    <Button fx:id="cancelBtn"
+            text="Cancel"
+            onAction="#cancelDeleteMode"
+            visible="false"
+            managed="false"/>
+    </HBox>
 </VBox>

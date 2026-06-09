@@ -27,6 +27,65 @@ public class ProcessMonitorTest {
     public static void start(){ 
         if (executor != null && !executor.isShutdown()) return;
         List<String> dynamicBlackList = new ArrayList<>();
+<<<<<<< Updated upstream
+=======
+
+        if (PomodoroController.isExamMode) {
+            //考試模式
+
+            //dynamicBlackList.addAll(defaultBrowsers); //修:考試模式一開始就把預設瀏覽器加入黑名單
+
+            if (PomodoroController.examBlockedApps != null) {
+                for (String appName : PomodoroController.examBlockedApps) {
+                    dynamicBlackList.add(appName.toLowerCase().replace(".exe", ""));
+                }
+            }
+        } else {
+            //一般模式
+            BlockData normalData = JsonManager.load();
+            if (normalData != null && normalData.getBlockedApps() != null) {
+                for (BlockItem item : normalData.getBlockedApps()) {
+                    if (item.isEnabled()) {
+                        dynamicBlackList.add(item.getName().toLowerCase().replace(".exe", ""));
+                    }
+                }
+            }
+        }
+
+        executor = Executors.newSingleThreadScheduledExecutor();
+        Runnable monitorTask = () -> {
+            List<OSProcess> processes = os.getProcesses();
+            // 新增：用來記錄這 3 秒的掃描週期內已經發送過 taskkill 的軟體
+            // 這樣就不會對著 Edge 的 20 個分頁連續印出 20 次 Force closing
+            Set<String> killedThisTick = new HashSet<>();
+            for(OSProcess process : processes){
+                String pName = process.getName().toLowerCase();
+                for(String blockApp : dynamicBlackList){
+                    if(pName.contains(blockApp)){
+                        killProcess(blockApp + ".exe");
+                        // 修:確保這 3 秒內，我們只對它執行一次 killProcess() 和印出文字
+                        if (!killedThisTick.contains(blockApp + ".exe")) {
+                            killProcess(blockApp + ".exe");
+                            killedThisTick.add(blockApp + ".exe");
+                        }
+                        // 修:確保「不是考試模式」(只有專注模式才紀錄)
+                        // 修:確保「這個軟體今天還沒被寫進 CSV」(只列出攔截了什麼，不算重複次數)
+                        if (!PomodoroController.isExamMode) {
+                            if (!loggedAppsThisSession.contains(blockApp)) {
+                                logToCSV(blockApp + ".exe");
+                                loggedAppsThisSession.add(blockApp); // 記下名字，這次就不會再重複寫入了
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        };
+
+        executor.scheduleAtFixedRate(monitorTask, 0, 3, java.util.concurrent.TimeUnit.SECONDS);
+
+        /*
+>>>>>>> Stashed changes
         File settingFile = new File("exam_block_data.json");
         if (settingFile.exists()) {
             try (FileReader reader = new FileReader(settingFile)) {

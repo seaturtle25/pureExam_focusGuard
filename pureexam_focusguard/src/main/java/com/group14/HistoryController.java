@@ -85,7 +85,7 @@ public class HistoryController {
         historyData.getViolations().addAll(violations);
 
         for (ViolationRecord record : historyData.getViolations()) {
-            Label label = new Label("• " + record.getName() + " (" + record.getCount() + "次)");
+            Label label = new Label("• " + record.getName());
             violationContainer.getChildren().add(label);
         }
     }
