@@ -174,6 +174,7 @@ public class PomodoroController {
             timer.pause();
             statusLabel.setText("狀態：已暫停");
         }
+        startBtn.setDisable(false);
     }
 
     @FXML
