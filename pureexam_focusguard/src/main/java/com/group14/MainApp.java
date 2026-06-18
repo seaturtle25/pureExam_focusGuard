@@ -25,14 +25,23 @@ public class MainApp extends Application {
     }
 
     static void setRoot(String fxml, String title) throws IOException {
-        Scene scene = new Scene(loadFXML(fxml));
-        scene.getStylesheets().add(
-            MainApp.class
-                .getResource("/css/style.css")
-                .toExternalForm()
-        );
+        Parent root = loadFXML(fxml);
+
+        Scene currentScene = stage.getScene();
+        
+        if(currentScene != null){
+            currentScene.setRoot(root);
+        } else {
+            Scene scene = new Scene(root, 650, 600);
+            scene.getStylesheets().add(
+                MainApp.class
+                    .getResource("/css/style.css")
+                    .toExternalForm()
+            );
+            stage.setScene(scene);
+        }
+
         stage.setTitle(title);
-        stage.setScene(scene);
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
