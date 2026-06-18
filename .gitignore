@@ -35,3 +35,6 @@ StudyRecord.json
 block_data.json
 exam.json
 *.oasis
+
+*.exe
+oasis.manifest
